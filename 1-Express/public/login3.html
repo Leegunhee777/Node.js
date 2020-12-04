@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>로그인 테스트</title>
+       
+    </head>
+    <body>
+        <h1>로그인</h1>
+        <br>
+        <form method="post" action='/process/login/Mike'> 
+            <script>{/*action 속성값으로 /process/login/mike를 넣었으므로 mike라는 문자열이 URL파라미터로 전달된다.
+             /process/login/mike Path로 post방식으로 request하겠다는것임
+            Mike와 realServerapp.8-2.js의 :name이 매칭된다.*/}</script>
+            <table>
+                <tr>
+                    <td><label>아이디</label></td>
+                    <td><input type="text" name= "id"></td>
+                </tr>
+                <tr>
+                    <td><label>비밀번호</label></td>
+                    <td><input type="password" name= "password"></td>
+                </tr>
+            </table>
+            <input type ="submit" value ="전송" name="">
+        </form>
+    </body>
+</html>

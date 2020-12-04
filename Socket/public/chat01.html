@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>채팅 클라이언트 01</title>
+		
+		<script src="jquery-3.1.1.min.js"></script>      
+        <script src="/socket.io/socket.io.js"></script>
+
+        <script>
+           
+            var host;
+            var port;
+            var socket;
+            
+         	// 문서 로딩 후 실행됨
+            $(function() {
+
+				$("#connectButton").bind('click', function(event) {
+					println('connectButton이 클릭되었습니다.');
+					
+                    host = $('#hostInput').val();
+                    port = $('#portInput').val();
+
+                    connectToServer();
+                });
+
+            });
+            
+			// 서버에 연결하는 함수 정의
+            function connectToServer() {
+
+                var options = {'forceNew':true};
+                var url = 'http://' + host + ':' + port;
+                socket = io.connect(url, options);
+                //웹 브라우저 쪽에서 connect()함수를 호출하여 연결을 요청한다.
+                //이 요청을 받아 웹 소켓이 연결되면 서버쪽에서는 connection이벤트가 발생하게됨
+                //이와 마찬가지로 클라이언트 쪽에서도 연결되었을때 이벤트를 받게된다.
+                //이벤트의 이름은 connect이고 , 연결이끊어지면 클라이언트쪽에 disconnect이벤트가 발생한다.
+                //서버쪽에서도 클라이언트가 연결된 소켓객체에 disconnect이벤트가 발생한다.
+                socket.on('connect', function() {
+                	println('웹소켓 서버에 연결되었습니다. : ' + url);
+                });
+
+                socket.on('disconnect', function() {
+                    println('웹소켓 연결이 종료되었습니다.');
+                });
+
+            }
+            
+			function println(data) {
+				console.log(data);
+				$('#result').append('<p>' + data + '</p>');
+			}
+        </script>
+	</head>
+<body>
+	<h3>채팅 클라이언트 01</h3>
+	<br>
+    <div>
+        <input type="text" id="hostInput" value="localhost" />
+        <input type="text" id="portInput" value="3000" />
+
+        <input type="button" id="connectButton" value="연결하기" />
+    </div>
+        
+    <hr/>
+    <p>결과 : </p>
+    <div id="result"></div>
+        
+</body>
+</html>
